@@ -5,6 +5,7 @@ import { IoMdColorFilter } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 import { Item } from "../types";
 import toast from "react-hot-toast";
+import { generate } from "random-words";
 
 interface HeaderProps {
   setRows: React.Dispatch<React.SetStateAction<Item[]>>;
@@ -16,13 +17,16 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
   const [numberOfColumns, setNumberOfColumns] = useState<number | null>(null);
   const [color, setColor] = useState("#818CF8");
 
-  const handleCreate = () => {
+  const onCreate = () => {
     if (numberOfColumns) {
       setNumberOfColumns(null);
       setColor("#818CF8");
       setIsColumns(false);
       setIsColors(false);
-      setRows((prev) => [...prev, { numberOfColumns, color, id: uuidv4() }]);
+      setRows((prev) => [
+        ...prev,
+        { numberOfColumns, color, id: uuidv4(), teamName: generate() },
+      ]);
       toast.success("Row is added");
     } else {
       toast.error("You have to choose number of Rows");
@@ -104,7 +108,7 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
       <button
         type="button"
         className="py-2 px-5 text-white rounded-md bg-indigo-400 duration-300 hover:bg-indigo-600"
-        onClick={handleCreate}
+        onClick={onCreate}
       >
         Create
       </button>

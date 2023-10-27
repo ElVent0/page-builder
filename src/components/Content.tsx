@@ -3,13 +3,19 @@ import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from "@dicebear/collection";
 import { Item } from "../types";
 import { useRotation } from "../hooks";
+import { AiOutlineDelete } from "react-icons/ai";
 
 interface ContentProps {
   rows: Item[];
+  setRows: React.Dispatch<React.SetStateAction<Item[]>>;
 }
 
-const Content: FC<ContentProps> = ({ rows }) => {
+const Content: FC<ContentProps> = ({ rows, setRows }) => {
   const { mouseX, mouseY } = useRotation();
+
+  const onDelete = (id: string) => {
+    setRows((prev) => prev.filter((item) => item.id !== id));
+  };
 
   return (
     <ul className="grid gap-3 w-1/4 ml-auto mr-auto relative">
@@ -22,7 +28,7 @@ const Content: FC<ContentProps> = ({ rows }) => {
             className="w-full h-2 absolute"
             style={{ backgroundColor: item.color }}
           ></div>
-          <p className="mb-2 font-bold">Team {index + 1}</p>
+          <p className="mb-2 font-bold">Team {item.teamName}</p>
           <ul className="grid grid-cols-4 gap-2">
             {[...Array(item.numberOfColumns).keys()].map((_, index) => {
               const avatar = createAvatar(botttsNeutral, {
@@ -51,6 +57,13 @@ const Content: FC<ContentProps> = ({ rows }) => {
               );
             })}
           </ul>
+          <button
+            type="button"
+            onClick={() => onDelete(item.id)}
+            className="absolute top-6 right-4"
+          >
+            <AiOutlineDelete />
+          </button>
         </li>
       ))}
     </ul>

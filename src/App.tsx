@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div className="py-10 relative">
       <Header setRows={setRows} />
-      <Content rows={rows} />
+      <Content rows={rows} setRows={setRows} />
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
