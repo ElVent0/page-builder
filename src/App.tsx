@@ -7,7 +7,7 @@ const App = () => {
   const [rows, setRows] = useState([]);
 
   return (
-    <div className="pt-10 relative">
+    <div className="py-10 relative">
       <Header setRows={setRows} toast={toast} />
       <Content rows={rows} />
       <Toaster position="top-center" reverseOrder={false} />

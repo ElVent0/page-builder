@@ -1,15 +1,41 @@
+import { createAvatar } from "@dicebear/core";
+import { botttsNeutral } from "@dicebear/collection";
+
 const Content = ({ rows }) => {
   return (
-    <div className="w-1/4 bg-white p-4 rounded-md ml-auto mr-auto shadow-md">
-      <ul className="relative left-1/2 -translate-x-1/2">
-        {rows.map((item) => (
-          <li key={item}>
-            {item.numberOfColumns}
-            {item.color}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="grid gap-3 w-1/4 ml-auto mr-auto relative">
+      {rows.map((item, index) => (
+        <li
+          key={index}
+          className={`grid bg-white p-2 pt-5 rounded-md shadow-md relative overflow-hidden`}
+        >
+          <div
+            className="w-full h-2 absolute"
+            style={{ backgroundColor: item.color }}
+          ></div>
+          <p className="mb-2 font-bold">Team {index + 1}</p>
+          <ul className="grid grid-cols-4 gap-2">
+            {[...Array(item.numberOfColumns).keys()].map((_, index) => {
+              const avatar = createAvatar(botttsNeutral, {
+                seed: `${
+                  parseInt(item.id.replace(/-/g, ""), 16) * (index + 1)
+                }`,
+              }).toDataUriSync();
+
+              return (
+                <li key={index} className="bg-gray-100 p-2 rounded-md ">
+                  <img
+                    src={avatar}
+                    alt="avatar image"
+                    className="rounded-md shadow-md"
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </li>
+      ))}
+    </ul>
   );
 };
 
