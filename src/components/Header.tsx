@@ -95,12 +95,12 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
           <p>Color</p>
         </button>
         {isColors && (
-          <div className="absolute top-16 -left-5 p-3 rounded-md bg-white shadow-md">
+          <div className="absolute top-16 -left-5 p-3 rounded-md bg-white shadow-md z-50 ">
             <HexColorPicker
               color={color}
               onChange={setColor}
               className=""
-              style={{ width: "124px", height: "192px", zIndex: 50 }}
+              style={{ width: "124px", height: "192px" }}
             />
           </div>
         )}
