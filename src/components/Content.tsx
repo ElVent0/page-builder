@@ -2,12 +2,15 @@ import { FC } from "react";
 import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from "@dicebear/collection";
 import { Item } from "../types";
+import { useRotation } from "../hooks";
 
 interface ContentProps {
   rows: Item[];
 }
 
 const Content: FC<ContentProps> = ({ rows }) => {
+  const { mouseX, mouseY } = useRotation();
+
   return (
     <ul className="grid gap-3 w-1/4 ml-auto mr-auto relative">
       {rows.map((item, index) => (
@@ -29,12 +32,21 @@ const Content: FC<ContentProps> = ({ rows }) => {
               }).toDataUriSync();
 
               return (
-                <li key={index} className="bg-gray-100 p-2 rounded-md ">
-                  <img
-                    src={avatar}
-                    alt="avatar image"
-                    className="rounded-md shadow-md"
-                  />
+                <li key={index} className="bg-gray-100 p-2 rounded-md relative">
+                  <div className="animate-bounce">
+                    <img
+                      src={avatar}
+                      alt="avatar image"
+                      className="rounded-md shadow-md"
+                      style={{
+                        transform: `rotateY(${
+                          (window.innerWidth / 2 - mouseX) / 14
+                        }deg) rotateX(${
+                          (window.innerHeight / 2 + mouseY - 800) / 14
+                        }deg)`,
+                      }}
+                    />
+                  </div>
                 </li>
               );
             })}
