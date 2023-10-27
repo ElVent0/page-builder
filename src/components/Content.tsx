@@ -1,7 +1,13 @@
+import { FC } from "react";
 import { createAvatar } from "@dicebear/core";
 import { botttsNeutral } from "@dicebear/collection";
+import { Item } from "../types";
 
-const Content = ({ rows }) => {
+interface ContentProps {
+  rows: Item[];
+}
+
+const Content: FC<ContentProps> = ({ rows }) => {
   return (
     <ul className="grid gap-3 w-1/4 ml-auto mr-auto relative">
       {rows.map((item, index) => (

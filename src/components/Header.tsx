@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { TbColumns3 } from "react-icons/tb";
 import { IoMdColorFilter } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
+import { Item } from "../types";
+import toast from "react-hot-toast";
 
-const Header = ({ setRows, toast }) => {
+interface HeaderProps {
+  setRows: React.Dispatch<React.SetStateAction<Item[]>>;
+}
+
+const Header: FC<HeaderProps> = ({ setRows }) => {
   const [isColumns, setIsColumns] = useState(false);
   const [isColors, setIsColors] = useState(false);
-  const [numberOfColumns, setNumberOfColumns] = useState(null);
+  const [numberOfColumns, setNumberOfColumns] = useState<number | null>(null);
   const [color, setColor] = useState("#818CF8");
 
   const handleCreate = () => {
@@ -44,7 +50,7 @@ const Header = ({ setRows, toast }) => {
           <p>Rows</p>
         </button>
         {isColumns && (
-          <ul className="absolute top-16 -left-5 w-36 bg-white py-3 px-4 rounded-md z-50 shadow-md">
+          <ul className="absolute top-16 -left-6 w-36 bg-white py-3 px-4 rounded-md z-50 shadow-md">
             {[...Array(4).keys()].map((item) => (
               <li
                 key={item}
