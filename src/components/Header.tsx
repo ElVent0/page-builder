@@ -51,7 +51,7 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
           ) : (
             <TbColumns3 className="text-indigo-600 text-lg" />
           )}
-          <p>Rows</p>
+          <p>Columns</p>
         </button>
         {isColumns && (
           <ul className="absolute top-16 -left-6 w-36 bg-white py-3 px-4 rounded-md z-50 shadow-md">
