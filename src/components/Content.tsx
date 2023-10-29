@@ -13,10 +13,6 @@ interface ContentProps {
 const Content: FC<ContentProps> = ({ rows, setRows }) => {
   const { mouseX, mouseY } = useRotation();
 
-  const onDelete = (id: string) => {
-    setRows((prev) => prev.filter((item) => item.id !== id));
-  };
-
   return (
     <ul className="grid gap-3 w-1/4 ml-auto mr-auto relative">
       {rows.map((item, index) => (
@@ -59,7 +55,9 @@ const Content: FC<ContentProps> = ({ rows, setRows }) => {
           </ul>
           <button
             type="button"
-            onClick={() => onDelete(item.id)}
+            onClick={() => {
+              setRows((prev) => prev.filter((value) => value.id !== item.id));
+            }}
             className="absolute top-6 right-4"
           >
             <AiOutlineDelete />
