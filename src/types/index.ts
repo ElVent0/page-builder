@@ -3,4 +3,5 @@ export interface Item {
   color: string;
   id: string;
   teamName: string[];
+  gap: number;
 }

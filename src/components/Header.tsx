@@ -14,8 +14,10 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ setRows }) => {
   const [isColumns, setIsColumns] = useState(false);
   const [isColors, setIsColors] = useState(false);
+  const [isGap, setIsGap] = useState(false);
   const [numberOfColumns, setNumberOfColumns] = useState<number | null>(null);
   const [color, setColor] = useState("#818CF8");
+  const [gap, setGap] = useState(0);
 
   const onCreate = () => {
     if (numberOfColumns) {
@@ -23,25 +25,29 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
       setColor("#818CF8");
       setIsColumns(false);
       setIsColors(false);
+      setIsGap(false);
       setRows((prev) => [
         ...prev,
-        { numberOfColumns, color, id: uuidv4(), teamName: generate() },
+        { numberOfColumns, color, id: uuidv4(), teamName: generate(), gap },
       ]);
       toast.success("Row is added");
     } else {
-      toast.error("You have to choose number of Rows");
+      toast.error("You have to choose number of Columns");
     }
   };
 
+  console.log(gap);
+
   return (
     <div className="w-1/4 flex justify-around items-center bg-white py-4 rounded-md relative ml-auto mr-auto shadow-md mb-6">
-      <div className="flex items-center gap-4 relative after:content-[''] after:absolute after:bg-gray-200 after:-top-1 after:-right-5 after:w-0.5 after:h-12">
+      <div className="flex items-center gap-4 relative after:content-[''] after:absolute after:bg-gray-200 after:-top-1 after:-right-3.5 after:w-0.5 after:h-12">
         <button
           type="button"
-          className="flex justify-center w-28 gap-2 items-center py-2 rounded-md duration-300 border border-indigo-600 hover:bg-indigo-200"
+          className="flex justify-center w-24 gap-1 items-center py-2 rounded-md duration-300 border border-indigo-600 hover:bg-indigo-200"
           onClick={() => {
-            if (isColors) {
-              setIsColors(!isColors);
+            if (isColors || setIsGap) {
+              setIsColors(false);
+              setIsGap(false);
             }
             setIsColumns(!isColumns);
           }}
@@ -54,7 +60,7 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
           <p>Columns</p>
         </button>
         {isColumns && (
-          <ul className="absolute top-16 -left-6 w-36 bg-white py-3 px-4 rounded-md z-50 shadow-md">
+          <ul className="absolute top-16 -left-4 w-32 bg-white py-3 px-4 rounded-md z-50 shadow-md">
             {[...Array(4).keys()].map((item) => (
               <li
                 key={item}
@@ -75,13 +81,14 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
           </ul>
         )}
       </div>
-      <div className="flex gap-2 items-center relative after:content-[''] after:absolute after:bg-gray-200 after:-top-1 after:-right-5 after:w-0.5 after:h-12">
+      <div className="flex gap-2 items-center relative after:content-[''] after:absolute after:bg-gray-200 after:-top-1 after:-right-3.5 after:w-0.5 after:h-12">
         <button
           type="button"
-          className="flex justify-center gap-3 w-28 items-center py-2 rounded-md duration-300 border border-indigo-600 hover:bg-indigo-200"
+          className="flex justify-center gap-1 w-20 items-center py-2 rounded-md duration-300 border border-indigo-600 hover:bg-indigo-200"
           onClick={() => {
-            if (isColumns) {
-              setIsColumns(!isColumns);
+            if (isColumns || setIsGap) {
+              setIsColumns(false);
+              setIsGap(false);
             }
             setIsColors(!isColors);
           }}
@@ -95,12 +102,43 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
           <p>Color</p>
         </button>
         {isColors && (
-          <div className="absolute top-16 -left-5 p-3 rounded-md bg-white shadow-md z-50 ">
+          <div className="absolute top-16 -left-4 p-3 rounded-md bg-white shadow-md z-50 ">
             <HexColorPicker
               color={color}
               onChange={setColor}
               className=""
-              style={{ width: "124px", height: "192px" }}
+              style={{ width: "90px", height: "180px" }}
+            />
+          </div>
+        )}
+      </div>
+      <div className="flex gap-2 items-center relative after:content-[''] after:absolute after:bg-gray-200 after:-top-1 after:-right-3.5 after:w-0.5 after:h-12">
+        <button
+          type="button"
+          className="flex justify-center gap-1 w-16 items-center py-2 rounded-md duration-300 border border-indigo-600 hover:bg-indigo-200"
+          onClick={() => {
+            if (isColumns || setIsColors) {
+              setIsColumns(false);
+              setIsColors(false);
+            }
+            setIsGap(!isGap);
+          }}
+        >
+          <p className="text-indigo-600">({gap})</p>
+          <p>Gap</p>
+        </button>
+        {isGap && (
+          <div className="absolute top-16 -left-9 w-32 bg-white py-3 px-4 rounded-md z-50 shadow-md">
+            <input
+              type="range"
+              className="w-full cursor-pointer"
+              min="0"
+              max="20"
+              step="4"
+              value={gap}
+              onChange={(e) => {
+                setGap(Number(e.target.value));
+              }}
             />
           </div>
         )}

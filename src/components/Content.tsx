@@ -25,7 +25,7 @@ const Content: FC<ContentProps> = ({ rows, setRows }) => {
             style={{ backgroundColor: item.color }}
           ></div>
           <p className="mb-2 font-bold">Team {item.teamName}</p>
-          <ul className="grid grid-cols-4 gap-2">
+          <ul className="grid grid-cols-4" style={{ gap: rows[index].gap }}>
             {[...Array(item.numberOfColumns).keys()].map((_, index) => {
               const avatar = createAvatar(botttsNeutral, {
                 seed: `${
