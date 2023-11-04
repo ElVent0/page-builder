@@ -8,10 +8,10 @@ import ColorsFilter from "./ColorsFilter";
 import GapsFilter from "./GapsFilter";
 
 interface HeaderProps {
-  setRows: React.Dispatch<React.SetStateAction<Item[]>>;
+  createNewRow: (newRow: Item) => void;
 }
 
-const Header: FC<HeaderProps> = ({ setRows }) => {
+const Header: FC<HeaderProps> = ({ createNewRow }) => {
   const [isColumns, setIsColumns] = useState(false);
   const [isColors, setIsColors] = useState(false);
   const [isGap, setIsGap] = useState(false);
@@ -26,10 +26,13 @@ const Header: FC<HeaderProps> = ({ setRows }) => {
       setIsColumns(false);
       setIsColors(false);
       setIsGap(false);
-      setRows((prev) => [
-        ...prev,
-        { numberOfColumns, color, id: uuidv4(), teamName: generate(), gap },
-      ]);
+      createNewRow({
+        numberOfColumns,
+        color,
+        id: uuidv4(),
+        teamName: generate(),
+        gap,
+      });
       toast.success("Row is added");
     } else {
       toast.error("You have to choose number of Columns");
